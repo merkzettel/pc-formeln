@@ -1,0 +1,607 @@
+<h2 id="xy">1) Die irreversible Expansion (gegen verschiedene Außendrücke &amp; ins unbegrenzte Vakuum (violett))</h2>
+
+
+<style>
+  svg {
+    cursor: zoom-in;
+    transition: box-shadow 0.15s ease;
+  }
+  svg:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Dunkles Vollbild-Overlay */
+  #svg-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    overflow: auto; /* Erlaubt Scrollen bei extremem Zoom */
+  }
+  #svg-lightbox.active {
+    display: flex;
+  }
+
+  /* Container nutzt fast den gesamten Bildschirm */
+  #svg-lightbox-content {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    width: 96vw;
+    height: 94vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+    position: relative;
+  }
+
+  /* Erzwingt maximale Größe im Vollbild */
+  #svg-lightbox-content svg {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    cursor: zoom-in;
+  }
+
+  /* 2-facher Extra-Zoom beim erneuten Klick auf das Bild */
+  #svg-lightbox-content.extra-zoom {
+    width: 180vw;
+    height: 175vh;
+    margin: auto;
+  }
+  #svg-lightbox-content.extra-zoom svg {
+    cursor: zoom-out;
+  }
+
+  /* Kleiner Schließen-Button oben rechts */
+  #svg-lightbox-close {
+    position: fixed;
+    top: 16px;
+    right: 22px;
+    background: #ffffff;
+    color: #111;
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    z-index: 10000;
+    line-height: 38px;
+    text-align: center;
+  }
+  #svg-lightbox-close:hover {
+    background: #f0f0f0;
+  }
+</style>
+
+
+<div class="potential-box">
+  <div class="formel-display" style="text-align: left; padding-left: 20px;">
+    <p>
+      Expandiert ein ideales Gas adiabatisch (Q = 0) gegen einen konstanten Außendruck
+      p<sub>ex</sub> bis zum Druckausgleich (p<sub>Ende</sub> = p<sub>ex</sub>), gilt für das
+      erreichte Endvolumen V<sub>Ende</sub>:
+    </p>
+    <p>
+      V<sub>Ende</sub>(p<sub>ex</sub>) = V<sub>1</sub> &middot; [ (1 / &gamma;) &middot; (p<sub>1</sub> / p<sub>ex</sub>) + (&gamma; &minus; 1) / &gamma; ]
+    </p>
+    <p>
+      Je kleiner der Außendruck p<sub>ex1</sub> &gt; p<sub>ex2</sub> &gt; p<sub>ex3</sub> gewählt wird,
+      desto weniger Volumenarbeit leistet das Gas, desto höher bleibt die Endtemperatur und desto
+      weiter rechts liegt das erreichte Endvolumen (V<sub>2</sub> &lt; V<sub>3</sub> &lt; V<sub>4</sub>).
+      Im Grenzfall des Vakuums (p<sub>ex</sub> &rarr; 0) wird gar keine Arbeit geleistet (W = 0),
+      die Temperatur bleibt konstant (&Delta;T = 0) und das Gas dehnt sich unbegrenzt aus
+      (V<sub>Ende</sub> &rarr; &infin;).
+    </p>
+
+    <div style="margin: 20px 0; max-width: 680px;">
+      <svg viewBox="0 0 680 440" width="100%" height="auto" xmlns="http://w3.org"
+           style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; font-family: system-ui, -apple-system, sans-serif;">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#222" />
+          </marker>
+          <marker id="arrow-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#7b1fa2" />
+          </marker>
+        </defs>
+
+        <!-- Titel -->
+        <text x="340" y="26" text-anchor="middle" font-size="14" font-weight="bold" fill="#111">
+          Irreversible adiabatische Expansionen gegen p<tspan dy="3" font-size="10">ex1</tspan><tspan dy="-3"> &gt; p</tspan><tspan dy="3" font-size="10">ex2</tspan><tspan dy="-3"> &gt; p</tspan><tspan dy="3" font-size="10">ex3</tspan><tspan dy="-3"> &amp; Vakuum (p</tspan><tspan dy="3" font-size="10">ex</tspan><tspan dy="-3"> = 0)</tspan>
+        </text>
+
+        <!-- Koordinatensystem:
+             Ursprung (0,0) bei x=80, y=385
+             p1 = 10 -> y=75   (Skala: 31 px pro Druckeinheit)
+             pex1 = 6.0 -> y=199
+             pex2 = 3.5 -> y=276.5
+             pex3 = 1.8 -> y=329.2
+             p = 0      -> y=385
+
+             V1 = 1.0   -> x=145 (Skala: 85 px pro Volumeneinheit, V=0 bei x=60? Nein, V=0 bei x=80 -> 65 px/Einh.)
+             Mit V=0 bei x=80 und 72 px pro Volumeneinheit:
+             V1 = 1.00  -> x=152
+             V2 = 1.48  -> x=186.6  (für pex1 = 6.0, gamma = 1.4)
+             V3 = 2.33  -> x=247.8  (für pex2 = 3.5, gamma = 1.4)
+             V4 = 4.25  -> x=386.0  (für pex3 = 1.8, gamma = 1.4)
+        -->
+
+        <!-- Achsen -->
+        <line x1="80" y1="385" x2="635" y2="385" stroke="#222" stroke-width="1.6" marker-end="url(#arrow)" />
+        <line x1="80" y1="385" x2="80" y2="45" stroke="#222" stroke-width="1.6" marker-end="url(#arrow)" />
+
+        <!-- Achsenbeschriftung -->
+        <text x="645" y="390" font-size="14" font-style="italic" fill="#111">V</text>
+        <text x="62" y="45" font-size="14" font-style="italic" fill="#111">p</text>
+
+        <!-- Ortskurve der irreversiblen Endzustände V_Ende(p_ex) -->
+        <path d="M 152 75
+                 Q 172 165, 186.6 199
+                 Q 212 245, 247.8 276.5
+                 Q 305 312, 386.0 329.2
+                 Q 480 348, 605 362"
+              fill="none" stroke="#888888" stroke-width="1.4" stroke-dasharray="2,3" />
+
+        <!-- Gestrichelte Projektionslinien zu den Achsen -->
+        <!-- Startpunkt -->
+        <line x1="80" y1="75" x2="152" y2="75" stroke="#666" stroke-width="1" stroke-dasharray="4,4" />
+        <line x1="152" y1="75" x2="152" y2="385" stroke="#666" stroke-width="1" stroke-dasharray="4,4" />
+
+        <!-- Endpunkt 1 (pex1, V2) -->
+        <line x1="80" y1="199" x2="186.6" y2="199" stroke="#666" stroke-width="0.9" stroke-dasharray="4,4" />
+        <line x1="186.6" y1="199" x2="186.6" y2="385" stroke="#666" stroke-width="0.9" stroke-dasharray="4,4" />
+
+        <!-- Endpunkt 2 (pex2, V3) -->
+        <line x1="80" y1="276.5" x2="247.8" y2="276.5" stroke="#666" stroke-width="0.9" stroke-dasharray="4,4" />
+        <line x1="247.8" y1="276.5" x2="247.8" y2="385" stroke="#666" stroke-width="0.9" stroke-dasharray="4,4" />
+
+        <!-- Endpunkt 3 (pex3, V4) -->
+        <line x1="80" y1="329.2" x2="386.0" y2="329.2" stroke="#666" stroke-width="0.9" stroke-dasharray="4,4" />
+        <line x1="386.0" y1="329.2" x2="386.0" y2="385" stroke="#666" stroke-width="0.9" stroke-dasharray="4,4" />
+
+        <!-- Skalenbeschriftung Y-Achse -->
+        <text x="68" y="390" text-anchor="end" font-size="13" fill="#222">0</text>
+        <text x="68" y="80" text-anchor="end" font-size="13" font-style="italic" fill="#222">p<tspan dy="3" font-size="10" font-style="normal">1</tspan></text>
+        <text x="68" y="204" text-anchor="end" font-size="13" font-style="italic" fill="#c62828">p<tspan dy="3" font-size="10" font-style="normal">ex1</tspan></text>
+        <text x="68" y="281" text-anchor="end" font-size="13" font-style="italic" fill="#1565c0">p<tspan dy="3" font-size="10" font-style="normal">ex2</tspan></text>
+        <text x="68" y="334" text-anchor="end" font-size="13" font-style="italic" fill="#2e7d32">p<tspan dy="3" font-size="10" font-style="normal">ex3</tspan></text>
+
+        <!-- Skalenbeschriftung X-Achse -->
+        <text x="152" y="405" text-anchor="middle" font-size="13" font-style="italic" fill="#222">V<tspan dy="3" font-size="10" font-style="normal">1</tspan></text>
+        <text x="186.6" y="405" text-anchor="middle" font-size="13" font-style="italic" fill="#c62828">V<tspan dy="3" font-size="10" font-style="normal">2</tspan></text>
+        <text x="247.8" y="405" text-anchor="middle" font-size="13" font-style="italic" fill="#1565c0">V<tspan dy="3" font-size="10" font-style="normal">3</tspan></text>
+        <text x="386.0" y="405" text-anchor="middle" font-size="13" font-style="italic" fill="#2e7d32">V<tspan dy="3" font-size="10" font-style="normal">4</tspan></text>
+        <text x="605" y="405" text-anchor="middle" font-size="12" font-style="italic" fill="#7b1fa2">V &rarr; &infin;</text>
+
+        <!-- 1. Kurve: Irreversibel gegen p_ex1 (rot) -->
+        <line x1="152" y1="75" x2="186.6" y2="199" stroke="#c62828" stroke-width="2.3" stroke-dasharray="6,4" />
+        <circle cx="186.6" cy="199" r="4.5" fill="#c62828" />
+
+        <!-- 2. Kurve: Irreversibel gegen p_ex2 (blau) -->
+        <line x1="152" y1="75" x2="247.8" y2="276.5" stroke="#1565c0" stroke-width="2.3" stroke-dasharray="6,4" />
+        <circle cx="247.8" cy="276.5" r="4.5" fill="#1565c0" />
+
+        <!-- 3. Kurve: Irreversibel gegen p_ex3 (grün) -->
+        <line x1="152" y1="75" x2="386.0" y2="329.2" stroke="#2e7d32" stroke-width="2.3" stroke-dasharray="6,4" />
+        <circle cx="386.0" cy="329.2" r="4.5" fill="#2e7d32" />
+
+        <!-- 4. Kurve: Grenzfall Vakuum p_ex = 0 (violett, läuft asymptotisch Richtung V -> unendlich bei p = 0) -->
+        <path d="M 152 75 Q 235 372, 608 380"
+              fill="none" stroke="#7b1fa2" stroke-width="2.3" stroke-dasharray="6,4" marker-end="url(#arrow-purple)" />
+
+        <!-- Startpunkt oben links -->
+        <circle cx="152" cy="75" r="5" fill="#111" />
+        <text x="163" y="72" font-size="12.5" font-weight="bold" fill="#111">(V<tspan dy="2" font-size="9.5">1</tspan><tspan dy="-2">, p</tspan><tspan dy="2" font-size="9.5">1</tspan><tspan dy="-2">)</tspan></text>
+
+        <!-- Hinweis Vakuum -->
+        <text x="515" y="370" text-anchor="middle" font-size="11" font-weight="bold" fill="#7b1fa2">
+          p<tspan dy="2" font-size="8.5">ex</tspan><tspan dy="-2"> = 0 (Vakuum): V</tspan><tspan dy="2" font-size="8.5">Ende</tspan><tspan dy="-2"> &rarr; &infin;</tspan>
+        </text>
+
+        <!-- Legende oben rechts -->
+        <rect x="335" y="45" width="320" height="122" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#cccccc" stroke-width="1" />
+
+        <line x1="348" y1="65" x2="382" y2="65" stroke="#c62828" stroke-width="2.3" stroke-dasharray="6,4" />
+        <circle cx="365" cy="65" r="3.5" fill="#c62828" />
+        <text x="392" y="69" font-size="11.5" fill="#222">1. irreversibel adiabatisch, p<tspan dy="2" font-size="9">ex1</tspan></text>
+
+        <line x1="348" y1="88" x2="382" y2="88" stroke="#1565c0" stroke-width="2.3" stroke-dasharray="6,4" />
+        <circle cx="365" cy="88" r="3.5" fill="#1565c0" />
+        <text x="392" y="92" font-size="11.5" fill="#222">2. irreversibel adiabatisch, p<tspan dy="2" font-size="9">ex2</tspan></text>
+
+        <line x1="348" y1="111" x2="382" y2="111" stroke="#2e7d32" stroke-width="2.3" stroke-dasharray="6,4" />
+        <circle cx="365" cy="111" r="3.5" fill="#2e7d32" />
+        <text x="392" y="115" font-size="11.5" fill="#222">3. irreversibel adiabatisch, p<tspan dy="2" font-size="9">ex3</tspan></text>
+
+        <line x1="348" y1="134" x2="382" y2="134" stroke="#7b1fa2" stroke-width="2.3" stroke-dasharray="6,4" />
+        <text x="392" y="138" font-size="11.5" fill="#222">4. Grenzfall p<tspan dy="2" font-size="9">ex</tspan><tspan dy="-2"> = 0 (Vakuum)</tspan></text>
+
+        <line x1="348" y1="154" x2="382" y2="154" stroke="#888888" stroke-width="1.4" stroke-dasharray="2,3" />
+        <text x="392" y="158" font-size="11" fill="#555">Ortskurve der Endzustände</text>
+      </svg>
+    </div>
+
+    <p>
+
+Die Lage links oder rechts von der violetten Vakuum-Kurve hat keine tiefere physikalische Bedeutung, sondern entsteht rein willkürlich durch die geschwungene Zeichenform der gestrichelten Vakuum-Linie. Die violette Kurve ist daher keine echte Zustandskurve, sondern nur ein symbolischer Wegweiser vom Startpunkt V<sub>1</sub>, p<sub>1</sub> in Richtung V &rarr; &infin; p &rarr; 0.
+
+<div class="explanation-block" style="margin-top: 20px; padding: 16px 20px; background-color: #f8f9fa; border-left: 4px solid #7b1fa2; border-radius: 4px; color: #222; line-height: 1.6;">
+  <h3 style="margin-top: 0; margin-bottom: 10px; font-size: 1.05em; color: #7b1fa2;">
+    Warum die Vakuum-Kurve (violett) alle anderen Linien überholt und schneidet
+  </h3>
+  <p style="margin-top: 0; margin-bottom: 10px;">
+    <strong>1. Kein Gegendruck bremst die Ausdehnung:</strong> Bei den Prozessen 1 bis 3
+    arbeitet das Gas gegen einen konstanten Außendruck (p<sub>ex1</sub> &gt; p<sub>ex2</sub> &gt; p<sub>ex3</sub>).
+    Sobald der Innendruck auf diesen Wert abgesunken ist, herrscht mechanisches Gleichgewicht und
+    die Expansion stoppt bei einem endlichen Volumen (V<sub>2</sub>, V<sub>3</sub> oder V<sub>4</sub>).
+  </p>
+  <p style="margin-top: 0; margin-bottom: 10px;">
+    <strong>2. Überholen der endlichen Endvolumina:</strong> Im Grenzfall des Vakuums
+    (p<sub>ex</sub> = 0) gibt es keinen Gegendruck, der den Kolben oder das Gas abbremsen könnte.
+    Während die anderen Prozesse bei ihren jeweiligen Endpunkten stehen bleiben (oder man sich
+    ihre Endzustände senkrecht nach unten verlängert denkt), läuft die Vakuum-Linie ungehindert
+    weiter nach rechts zu beliebig großen Volumina (V<sub>Ende</sub> &rarr; &infin;) und kreuzt
+    dabei zwangsläufig alle anderen Linien bzw. deren Verlängerungen.
+  </p>
+  <p style="margin-bottom: 0;">
+    <strong>3. Physikalische Bedeutung der gestrichelten Linien:</strong> Da bei schnellen,
+    irreversiblen Expansionen während des Vorgangs kein einheitlicher Innendruck existiert, sind
+    die gestrichelten Linien keine echten Zustandskurven, sondern nur optische Verbindungslinien
+    vom Startpunkt (V<sub>1</sub>, p<sub>1</sub>) zum jeweiligen Gleichgewichts-Endpunkt. Der
+    Schnittpunkt der Linien im Diagramm bedeutet daher nicht, dass zwei Prozesse denselben
+    Zwischenzustand durchlaufen.
+  </p>
+</div>
+
+<div class="explanation-block" style="margin-top: 16px; padding: 16px 20px; background-color: #f4f7fb; border-left: 4px solid #1565c0; border-radius: 4px; color: #222; line-height: 1.6;">
+  <h3 style="margin-top: 0; margin-bottom: 10px; font-size: 1.05em; color: #1565c0;">
+    Wichtige Unterscheidung: Freies Vakuum vs. begrenztes Gefäßvolumen (Zwei-Kammer-Versuch)
+  </h3>
+  <p style="margin-top: 0; margin-bottom: 10px;">
+    In beiden Fällen leistet ein ideales Gas keine Arbeit (W = 0) und tauscht keine Wärme aus
+    (Q = 0), weshalb die Temperatur stets konstant bleibt (<strong>&Delta;T = 0</strong>). Der
+    Endzustand im p-V-Diagramm hängt jedoch davon ab, ob das Volumen begrenzt ist:
+  </p>
+  <ul style="margin-top: 0; margin-bottom: 0; padding-left: 20px;">
+    <li style="margin-bottom: 8px;">
+      <strong>Unbegrenztes Vakuum (p<sub>ex</sub> = 0 ohne Wand):</strong> Ohne Gegendruck und
+      ohne Begrenzung dehnt sich das Gas unendlich weit aus (V<sub>Ende</sub> &rarr; &infin;).
+      Dadurch sinkt auch der Gasdruck auf null (p<sub>Ende</sub> &rarr; 0).
+    </li>
+    <li>
+      <strong>Begrenztes Vakuum (Zwei-Kammer-Versuch mit festem V<sub>2</sub>):</strong> Sobald das
+      Gas die starren Wände der zweiten Kammer erreicht, wird die Ausdehnung mechanisch gestoppt,
+      ohne dass Arbeit verrichtet wird. Da die Temperatur gleich bleibt (&Delta;T = 0), stellt
+      sich ein positiver Enddruck <strong>p<sub>2</sub> = p<sub>1</sub> &middot; (V<sub>1</sub> / V<sub>2</sub>) &gt; 0</strong>
+      ein. Der Endpunkt (V<sub>2</sub>, p<sub>2</sub>) liegt daher exakt auf der Isotherme oberhalb
+      der p = 0-Achse.
+    </li>
+  </ul>
+</div>
+
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC-Formelsammlung: Irreversible Expansion &amp; Vakuum</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      color: #222;
+      max-width: 880px;
+      margin: 25px auto;
+      padding: 0 20px;
+      background-color: #fafafa;
+    }
+    h2 {
+      color: #111;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 6px;
+    }
+    .potential-box {
+      background: #ffffff;
+      border: 1px solid #dcdcdc;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .formel-display {
+      text-align: left;
+    }
+    .formula-card {
+      background: #f0f4f8;
+      border-left: 4px solid #1565c0;
+      padding: 12px 16px;
+      margin: 14px 0;
+      border-radius: 4px;
+      font-family: "Cambria Math", "Times New Roman", serif;
+      font-size: 1.05em;
+    }
+    .explanation-block {
+      margin-top: 18px;
+      padding: 16px 20px;
+      border-radius: 4px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<h2 id="xy">2) Die irreversible Expansion ins begrenzte Vakuum (orange) &amp; gegen verschiedene Außendrücke</h2>
+<div class="potential-box">
+  <div class="formel-display">
+
+    <!-- Kombiniertes p-V-Diagramm als Inline-SVG (mit p_Kammer = p_ex2) -->
+    <div style="margin: 22px 0; max-width: 760px;">
+      <svg viewBox="0 0 760 465" width="100%" height="auto" xmlns="http://w3.org"
+           style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; font-family: system-ui, -apple-system, sans-serif;">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#222" />
+          </marker>
+          <marker id="arrow-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#7b1fa2" />
+          </marker>
+        </defs>
+
+        <!-- Titel -->
+        <text x="380" y="26" text-anchor="middle" font-size="14" font-weight="bold" fill="#111">
+          Irreversible Expansionen mit gleichem Enddruck p<tspan dy="3" font-size="10">Kammer</tspan><tspan dy="-3"> = p</tspan><tspan dy="3" font-size="10">ex2</tspan><tspan dy="-3"> (Adiabatisch vs. Vakuum)</tspan>
+        </text>
+
+        <!-- Exakte Koordinatenberechnung (gamma = 1.4, p1 = 10.0, V1 = 1.0):
+             Ursprung (0,0) bei x=105, y=400
+             Y-Skala: 33 px pro Druckeinheit -> p1 = 10.0 bei y = 70, p = 0 bei y = 400
+             pex1 = 6.0  -> y = 202.0
+             pex2 = 3.5  -> y = 284.5  (= p_Kammer!)
+             pex3 = 1.8  -> y = 340.6
+
+             X-Skala: 75 px pro Volumeneinheit -> V = 0 bei x = 105, V1 = 1.0 bei x = 180
+             V2 (pex1=6.0) = 1.476 -> x = 215.7
+             V3 (pex2=3.5) = 2.327 -> x = 279.5  (adiabatisch mit Arbeit, kühlt ab)
+             V_Kammer (p_Kammer=3.5, isotherm) = 10.0 / 3.5 = 2.857 -> x = 319.3 (begrenztes Vakuum, T = const.)
+             V4 (pex3=1.8) = 4.254 -> x = 424.0
+        -->
+
+        <!-- Achsen -->
+        <line x1="105" y1="400" x2="715" y2="400" stroke="#222" stroke-width="1.6" marker-end="url(#arrow)" />
+        <line x1="105" y1="400" x2="105" y2="42" stroke="#222" stroke-width="1.6" marker-end="url(#arrow)" />
+
+        <!-- Achsenbeschriftung -->
+        <text x="726" y="405" font-size="14" font-style="italic" fill="#111">V</text>
+        <text x="86" y="42" font-size="14" font-style="italic" fill="#111">p</text>
+
+        <!-- Isotherme (T = const., p*V = 10.0) als Referenzkurve (orange durchgezogen) -->
+        <!-- Punkte exakt berechnet für V = 1.0 bis 6.5 (x = 105 + 75*V, y = 400 - 33*(10/V)):
+             V=1.0   -> x=180.0, y=70.0
+             V=1.2   -> x=195.0, y=125.0
+             V=1.5   -> x=217.5, y=180.0
+             V=2.0   -> x=255.0, y=235.0
+             V=2.5   -> x=292.5, y=268.0
+             V=2.857 -> x=319.3, y=284.5 (Trefferpunkt V_Kammer auf Höhe p_ex2!)
+             V=3.5   -> x=367.5, y=305.7
+             V=4.5   -> x=442.5, y=326.7
+             V=6.5   -> x=592.5, y=349.2 -->
+        <path d="M 180.0 70.0
+                 L 195.0 125.0
+                 L 217.5 180.0
+                 L 255.0 235.0
+                 L 292.5 268.0
+                 L 319.3 284.5
+                 L 367.5 305.7
+                 L 442.5 326.7
+                 L 592.5 349.2"
+              fill="none" stroke="#ef6c00" stroke-width="2.0" />
+
+        <!-- Ortskurve der irreversiblen adiabatischen Endzustände V_Ende(p_ex) -->
+        <path d="M 180.0 70.0
+                 Q 200.0 165.0, 215.7 202.0
+                 Q 242.0 250.0, 279.5 284.5
+                 Q 340.0 322.0, 424.0 340.6
+                 Q 525.0 362.0, 670.0 376.0"
+              fill="none" stroke="#888888" stroke-width="1.4" stroke-dasharray="2,3" />
+
+        <!-- Gestrichelte Projektionslinien zu den Achsen -->
+        <!-- Startpunkt -->
+        <line x1="105" y1="70.0" x2="180.0" y2="70.0" stroke="#666" stroke-width="1" stroke-dasharray="4,4" />
+        <line x1="180.0" y1="70.0" x2="180.0" y2="400" stroke="#666" stroke-width="1" stroke-dasharray="4,4" />
+
+        <!-- Endpunkt 1 (pex1, V2) -->
+        <line x1="105" y1="202.0" x2="215.7" y2="202.0" stroke="#666" stroke-width="0.9" stroke-dasharray="4,4" />
+        <line x1="215.7" y1="202.0" x2="215.7" y2="400" stroke="#666" stroke-width="0.9" stroke-dasharray="4,4" />
+
+        <!-- Gemeinsame horizontale Drucklinie für p_ex2 = p_Kammer! -->
+        <line x1="105" y1="284.5" x2="319.3" y2="284.5" stroke="#1565c0" stroke-width="1.2" stroke-dasharray="5,3" />
+        <line x1="279.5" y1="284.5" x2="279.5" y2="400" stroke="#1565c0" stroke-width="0.9" stroke-dasharray="4,4" />
+        <line x1="319.3" y1="284.5" x2="319.3" y2="400" stroke="#ef6c00" stroke-width="1.0" stroke-dasharray="4,3" />
+
+        <!-- Endpunkt 3 (pex3, V4) -->
+        <line x1="105" y1="340.6" x2="424.0" y2="340.6" stroke="#666" stroke-width="0.9" stroke-dasharray="4,4" />
+        <line x1="424.0" y1="340.6" x2="424.0" y2="400" stroke="#666" stroke-width="0.9" stroke-dasharray="4,4" />
+
+        <!-- Skalenbeschriftung Y-Achse -->
+        <text x="93" y="405" text-anchor="end" font-size="13" fill="#222">0</text>
+        <text x="93" y="75" text-anchor="end" font-size="13" font-style="italic" fill="#222">p<tspan dy="3" font-size="10" font-style="normal">1</tspan></text>
+        <text x="93" y="207" text-anchor="end" font-size="13" font-style="italic" fill="#c62828">p<tspan dy="3" font-size="10" font-style="normal">ex1</tspan></text>
+        <text x="93" y="289" text-anchor="end" font-size="12.5" font-weight="bold" fill="#1565c0">
+          <tspan font-style="italic">p</tspan><tspan dy="3" font-size="9.5">ex2</tspan><tspan dy="-3"> = </tspan><tspan font-style="italic" fill="#ef6c00">p</tspan><tspan dy="3" font-size="9.5" fill="#ef6c00">Kammer</tspan>
+        </text>
+        <text x="93" y="345" text-anchor="end" font-size="13" font-style="italic" fill="#2e7d32">p<tspan dy="3" font-size="10" font-style="normal">ex3</tspan></text>
+
+        <!-- Skalenbeschriftung X-Achse -->
+        <text x="180.0" y="420" text-anchor="middle" font-size="13" font-style="italic" fill="#222">V<tspan dy="3" font-size="10" font-style="normal">1</tspan></text>
+        <text x="215.7" y="420" text-anchor="middle" font-size="13" font-style="italic" fill="#c62828">V<tspan dy="3" font-size="10" font-style="normal">2</tspan></text>
+        <text x="279.5" y="420" text-anchor="middle" font-size="13" font-style="italic" fill="#1565c0">V<tspan dy="3" font-size="10" font-style="normal">3</tspan></text>
+        <text x="328.0" y="420" text-anchor="middle" font-size="12.5" font-style="italic" font-weight="bold" fill="#ef6c00">V<tspan dy="3" font-size="9.5" font-style="normal">Kammer</tspan></text>
+        <text x="424.0" y="420" text-anchor="middle" font-size="13" font-style="italic" fill="#2e7d32">V<tspan dy="3" font-size="10" font-style="normal">4</tspan></text>
+        <text x="680" y="420" text-anchor="middle" font-size="12" font-style="italic" fill="#7b1fa2">V &rarr; &infin;</text>
+
+        <!-- 1. Kurve: Irreversibel gegen p_ex1 (rot) -->
+        <line x1="180.0" y1="70.0" x2="215.7" y2="202.0" stroke="#c62828" stroke-width="2.2" stroke-dasharray="6,4" />
+        <circle cx="215.7" cy="202.0" r="4.5" fill="#c62828" />
+
+        <!-- 2. Kurve: Irreversibel gegen p_ex2 (blau) -->
+        <line x1="180.0" y1="70.0" x2="279.5" y2="284.5" stroke="#1565c0" stroke-width="2.2" stroke-dasharray="6,4" />
+        <circle cx="279.5" cy="284.5" r="4.5" fill="#1565c0" />
+
+        <!-- 4a. Begrenztes Vakuum (Zwei-Kammer-Versuch auf V_Kammer mit p_Kammer = p_ex2, orange gestrichelt) -->
+        <line x1="180.0" y1="70.0" x2="319.3" y2="284.5" stroke="#ef6c00" stroke-width="2.3" stroke-dasharray="5,3" />
+        <circle cx="319.3" cy="284.5" r="5" fill="#ef6c00" />
+        <text x="330" y="279" font-size="11" font-weight="bold" fill="#e65100">
+
+
+<div class="merksatz-box" style="margin-top: 16px; padding: 14px 18px; background-color: #e8f5e9; border: 1px solid #a5d6a7; border-left: 5px solid #2e7d32; border-radius: 5px; color: #1b5e20;">
+  <strong style="display: block; margin-bottom: 6px; font-size: 1.02em;">
+    Merksatz: Energiebilanz der Kolbenarbeit (bei Q = 0)
+  </strong>
+  <div style="font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 1.08em; margin-bottom: 6px; color: #111;">
+
+    |W<sub>Kolben</sub>| &gt; 0 &nbsp;&rArr;&nbsp; &Delta;U = W &lt; 0 &nbsp;&rArr;&nbsp; T<sub>3</sub> &lt; T<sub>1</sub> &nbsp;&rArr;&nbsp; <strong>V<sub>3</sub> &lt; V<sub>Kammer</sub></strong> <span style="font-size: 0.9em; color: #444;">(bei p<sub>3</sub> = p<sub>Kammer</sub>)</span>
+  </div>
+  <p style="margin: 0; font-size: 0.95em; color: #222;">
+    Leistet das Gas Arbeit am Kolben, verliert es innere Energie und kühlt ab. Deshalb nimmt es bei gleichem Enddruck weniger Volumen ein als im Vakuumversuch ohne Kolbenarbeit (W = 0, &Delta;T = 0).
+  </p>
+</div>
+
+<!-- Genau EIN Lightbox-Container am Ende der Seite -->
+<div id="svg-lightbox" style="display: none;">
+  <button id="svg-lightbox-close" title="Schließen (Esc)">&times;</button>
+  <div id="svg-lightbox-content"></div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const lightbox = document.getElementById("svg-lightbox");
+    const content = document.getElementById("svg-lightbox-content");
+    const closeBtn = document.getElementById("svg-lightbox-close");
+    let currentScale = 1.6;
+
+    // 1. Gesamten Abschnitt (.potential-box) beim Anklicken länger machen
+    document.querySelectorAll(".potential-box").forEach(function (box) {
+      box.style.cursor = "pointer";
+      box.style.transition = "all 0.25s ease";
+
+      box.addEventListener("click", function () {
+        const isExpanded = box.dataset.expanded === "true";
+        if (!isExpanded) {
+          box.style.setProperty("max-height", "", "important");
+          box.style.setProperty("min-height", "950px", "important");
+          box.style.setProperty("padding-bottom", "45px", "important");
+          box.style.setProperty("overflow", "visible", "important");
+          box.dataset.expanded = "true";
+        } else {
+          box.style.removeProperty("max-height");
+          box.style.removeProperty("min-height");
+          box.style.removeProperty("padding-bottom");
+          box.style.removeProperty("overflow");
+          box.dataset.expanded = "false";
+        }
+      });
+    });
+
+    if (!lightbox || !content) return;
+
+    function closeLightbox() {
+      lightbox.style.display = "none";
+      content.innerHTML = "";
+      currentScale = 1.6;
+    }
+
+    function updateScale(clone, scale) {
+      clone.style.setProperty("transform", "scale(" + scale + ")", "important");
+      clone.style.setProperty("transform-origin", "top center", "important");
+      clone.style.setProperty("cursor", scale > 1.8 ? "zoom-out" : "zoom-in", "important");
+    }
+
+    // 2. Diagramme beim Anklicken in einem langen, scrollbaren Fenster vergrößern
+    document.querySelectorAll("svg").forEach(function (svg) {
+      svg.style.cursor = "zoom-in";
+      svg.setAttribute("title", "Zum Vergrößern anklicken");
+
+      svg.addEventListener("click", function (e) {
+        // Verhindert, dass gleichzeitig der gesamte Abschnitt umgeschaltet wird
+        e.stopPropagation();
+
+        const rect = svg.getBoundingClientRect();
+        content.innerHTML = "";
+
+        // Langes Vollbild-Overlay (startet oben, damit nichts abgeschnitten wird)
+        lightbox.style.cssText =
+          "display: flex !important; position: fixed !important; inset: 0 !important; " +
+          "background: rgba(0,0,0,0.88) !important; z-index: 99999 !important; " +
+          "justify-content: center !important; align-items: flex-start !important; " +
+          "overflow-y: auto !important; padding: 30px 20px 80px 20px !important;";
+
+        // Innerer Rahmen mit vergrößerter Höhe
+        content.style.cssText =
+          "background: transparent !important; display: flex !important; " +
+          "justify-content: center !important; align-items: flex-start !important; " +
+          "min-height: 92vh !important; padding-top: 10px !important;";
+
+        const clone = svg.cloneNode(true);
+        clone.removeAttribute("title");
+        clone.style.setProperty("width", rect.width + "px", "important");
+        clone.style.setProperty("height", rect.height + "px", "important");
+        clone.style.setProperty("max-width", "none", "important");
+        clone.style.setProperty("max-height", "none", "important");
+        clone.style.setProperty("background", "#ffffff", "important");
+        clone.style.setProperty("border-radius", "8px", "important");
+        clone.style.setProperty("box-shadow", "0 12px 40px rgba(0,0,0,0.6)", "important");
+
+        currentScale = 1.6;
+        updateScale(clone, currentScale);
+
+        content.appendChild(clone);
+      });
+    });
+
+    // Klick ins vergrößerte Diagramm schaltet zwischen 1,6x und 2,2x um
+    content.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const clone = content.querySelector("svg");
+      if (!clone) return;
+      currentScale = (currentScale < 2.0) ? 2.2 : 1.6;
+      updateScale(clone, currentScale);
+    });
+
+    // Schließen per Klick auf Hintergrund, X-Button oder Escape
+    lightbox.addEventListener("click", closeLightbox);
+
+    if (closeBtn) {
+      closeBtn.style.cssText =
+        "position: fixed !important; top: 18px !important; right: 24px !important; " +
+        "width: 40px !important; height: 40px !important; border-radius: 50% !important; " +
+        "border: none !important; background: #fff !important; color: #111 !important; " +
+        "font-size: 24px !important; font-weight: bold !important; cursor: pointer !important; " +
+        "z-index: 100000 !important; line-height: 40px !important; text-align: center !important;";
+      closeBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        closeLightbox();
+      });
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeLightbox();
+      }
+    });
+  });
+</script>
+
+
+</body>
+</html>
