@@ -1,0 +1,92 @@
+<div class="kinetik-diagramm-box" style="margin: 22px 0; padding: 18px; background: #ffffff; border: 1px solid #dcdcdc; border-radius: 8px; max-width: 760px; position: relative;">
+  
+  <!-- Dieses CSS greift NUR, wenn das Diagramm im echten Vollbildmodus ist -->
+  <style>
+    #bodenstein-vollbild-svg:fullscreen {
+      background: #ffffff !important;
+      padding: 40px !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      box-sizing: border-box !important;
+    }
+  </style>
+
+  <h3 style="margin-top: 0; margin-bottom: 10px; font-size: 1.08em; color: #111;">
+    Konzentrations-Zeit-Verlauf nach dem Bodenstein-Prinzip (k<sub>2</sub>, k<sub>3</sub> &gg; k<sub>1</sub>)
+  </h3>
+  <p style="margin-top: 0; margin-bottom: 14px; font-size: 0.95em; color: #333;">
+    Gesamtbilanz der Reaktionsfolge: <strong>4 A + B &rarr; E</strong> (mit den reaktiven Zwischenprodukten C und D).
+  </p>
+
+  <!-- Das SVG nutzt beim Klick die native Vollbild-Funktion des Browsers -->
+  <svg id="bodenstein-vollbild-svg" viewBox="0 0 740 430" width="100%" height="auto" xmlns="http://w3.org"
+       style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; font-family: system-ui, -apple-system, sans-serif; cursor: zoom-in; display: block;"
+       onclick="event.stopPropagation(); if(!document.fullscreenElement){ this.requestFullscreen(); } else { document.exitFullscreen(); }">
+    
+    <defs>
+      <marker id="arr-k-final" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="#222" />
+      </marker>
+    </defs>
+
+    <!-- Titel im SVG -->
+    <text x="370" y="25" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#111">
+      Konzentration c(t) gegen Reaktionsfortschritt (k<tspan dy="3" font-size="10">2</tspan><tspan dy="-3">, k</tspan><tspan dy="3" font-size="10">3</tspan><tspan dy="-3"> &gt;&gt; k</tspan><tspan dy="3" font-size="10">1</tspan><tspan dy="-3">)</tspan>
+    </text>
+
+    <!-- Koordinatensystem -->
+    <rect x="80" y="50" width="38" height="315" fill="#fff8e1" />
+    <line x1="118" y1="50" x2="118" y2="365" stroke="#ffb300" stroke-width="1" stroke-dasharray="3,3" />
+    <text x="124" y="65" font-size="10.5" fill="#b26a00">Induktionsphase (Aufbau von C, D)</text>
+
+    <line x1="80" y1="365" x2="700" y2="365" stroke="#222" stroke-width="1.6" marker-end="url(#arr-k-final)" />
+    <line x1="80" y1="365" x2="80" y2="42" stroke="#222" stroke-width="1.6" marker-end="url(#arr-k-final)" />
+
+    <text x="708" y="370" font-size="13.5" font-style="italic" fill="#111">t</text>
+    <text x="390" y="395" text-anchor="middle" font-size="12.5" fill="#222">Reaktionsfortschritt / Zeit t</text>
+    <text x="26" y="205" text-anchor="middle" font-size="12.5" fill="#222" transform="rotate(-90 26 205)">Konzentration c</text>
+
+    <text x="70" y="370" text-anchor="end" font-size="12" fill="#222">0</text>
+    <line x1="75" y1="75" x2="85" y2="75" stroke="#222" stroke-width="1.2" />
+    <text x="70" y="79" text-anchor="end" font-size="12" font-style="italic" fill="#1565c0">[A]<tspan dy="3" font-size="9.5" font-style="normal">0</tspan></text>
+
+    <line x1="75" y1="220" x2="85" y2="220" stroke="#222" stroke-width="1.2" />
+    <text x="70" y="224" text-anchor="end" font-size="12" font-style="italic" fill="#00838f">[B]<tspan dy="3" font-size="9.5" font-style="normal">0</tspan></text>
+
+    <line x1="75" y1="292.5" x2="670" y2="292.5" stroke="#2e7d32" stroke-width="0.9" stroke-dasharray="4,4" />
+    <text x="70" y="296" text-anchor="end" font-size="11.5" font-style="italic" fill="#2e7d32">&frac14;[A]<tspan dy="3" font-size="9" font-style="normal">0</tspan></text>
+
+    <!-- Kurven -->
+    <path d="M 80 75 C 160 145, 290 265, 450 322 C 540 348, 620 358, 680 362" fill="none" stroke="#1565c0" stroke-width="2.6" />
+    <text x="195" y="155" font-size="12.5" font-weight="bold" fill="#1565c0">[A]</text>
+
+    <path d="M 80 220 C 160 238, 290 268, 450 282 C 540 288, 620 291, 680 292" fill="none" stroke="#00838f" stroke-width="2.3" />
+    <text x="235" y="242" font-size="12.5" font-weight="bold" fill="#00838f">[B]</text>
+
+    <path d="M 80 365 C 155 348, 285 318, 450 303 C 540 297, 620 294, 680 293" fill="none" stroke="#2e7d32" stroke-width="2.6" />
+    <text x="315" y="330" font-size="12.5" font-weight="bold" fill="#2e7d32">[E]</text>
+
+    <path d="M 80 365 Q 96 340, 118 339 C 220 342, 380 354, 680 363" fill="none" stroke="#ef6c00" stroke-width="2.1" stroke-dasharray="6,3" />
+    <text x="150" y="333" font-size="12" font-weight="bold" fill="#ef6c00">[D] (QSS)</text>
+
+    <path d="M 80 365 Q 90 351, 108 351 C 210 355, 370 361, 680 364.5" fill="none" stroke="#c62828" stroke-width="2.1" />
+    <text x="150" y="350" font-size="12" font-weight="bold" fill="#c62828">[C] (QSS)</text>
+
+    <!-- Legende -->
+    <rect x="435" y="52" width="255" height="122" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#cccccc" stroke-width="1" />
+    <line x1="448" y1="71" x2="478" y2="71" stroke="#1565c0" stroke-width="2.6" />
+    <text x="486" y="75" font-size="11.5" fill="#222">Edukt [A] (langsamer Abbau)</text>
+    <line x1="448" y1="93" x2="478" y2="93" stroke="#00838f" stroke-width="2.3" />
+    <text x="486" y="97" font-size="11.5" fill="#222">Co-Edukt [B] (&Delta;[B] = &frac14; &Delta;[A])</text>
+    <line x1="448" y1="115" x2="478" y2="115" stroke="#2e7d32" stroke-width="2.6" />
+    <text x="486" y="119" font-size="11.5" fill="#222">Produkt [E] (Endwert &frac14; [A]0)</text>
+    <line x1="448" y1="137" x2="478" y2="137" stroke="#ef6c00" stroke-width="2.1" stroke-dasharray="6,3" />
+    <text x="486" y="141" font-size="11.5" fill="#222">Zwischenprodukt [D] (d[D]/dt &approx; 0)</text>
+    <line x1="448" y1="159" x2="478" y2="159" stroke="#c62828" stroke-width="2.1" />
+    <text x="486" y="163" font-size="11.5" fill="#222">Zwischenprodukt [C] (d[C]/dt &approx; 0)</text>
+  </svg>
+
+  <p style="margin-top: 12px; margin-bottom: 0; font-size: 0.92em; color: #333; line-height: 1.55;">
+    <strong>Lesehilfe zum Bodenstein-Prinzip:</strong> Da <em>C</em> und <em>D</em> durch die schnellen Folgeschritte sofort abreagieren, liegen ihre stationären Konzentrationen im Diagramm deutlich überhöht dargestellt, damit ihr flacher Verlauf sichtbar bleibt.
+  </p>
+</div>
